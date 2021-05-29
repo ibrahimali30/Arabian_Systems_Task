@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.domain.interactor.GetForecastUseCase
+import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -19,24 +20,28 @@ class ForecastViewModel @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
     val screenState by lazy { MutableLiveData<ForecastScreenState>() }
 
-    fun getForecast(params: ForecastParams) {
+    fun getForecast(cityName: String) {
         screenState.value = ForecastScreenState.Loading
 
-        refreshForecastUseCase.fetchForecast(params)
+        refreshForecastUseCase.fetchForecast(ForecastParams(cityName))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                it
+                handleSuccessResponse(it)
             }, {
                 screenState.value =ForecastScreenState.ErrorLoadingFromApi(it)
             }).addTo(compositeDisposable)
+    }
+
+    private fun handleSuccessResponse(it: ForecastUiModel) {
+        screenState.value = ForecastScreenState.SuccessAPIResponse(it)
     }
 
 
     sealed class ForecastScreenState {
         object Loading : ForecastScreenState()
         class ErrorLoadingFromApi(val error: Throwable) : ForecastScreenState()
-        class SuccessAPIResponse(val data: ArrayList<Any>, val name: String) : ForecastScreenState()
+        class SuccessAPIResponse(val data: ForecastUiModel) : ForecastScreenState()
     }
 
 

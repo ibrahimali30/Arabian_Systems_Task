@@ -9,6 +9,7 @@ data class ForecastUiModel(
     val id: Int = 0 ,
     val main: String = "",
     val weather: String = "",
+    val date: String = "",
     val temp: Double = 0.0,
     val feels_like: Double = 0.0,
     val temp_max: Double = 0.0,

@@ -10,6 +10,7 @@ interface ForecastApiService {
     @GET("find")
     fun getForecast(
         @Query("q") cityname : String = "cairo",
-        @Query("units") units : String = "link%2C%20accurate"
+        @Query("cnt") cnt : Int = 1,
+        @Query("units") units : String = "imperial%2C%20metric"
     ): Single<CityWeatherResponse>
 }
