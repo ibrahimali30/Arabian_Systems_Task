@@ -11,6 +11,6 @@ interface ForecastApiService {
     fun getForecast(
         @Query("q") cityname : String = "cairo",
         @Query("cnt") cnt : Int = 1,
-        @Query("units") units : String = "imperial%2C%20metric"
+        @Query("units") units : String = "metric"
     ): Single<CityWeatherResponse>
 }

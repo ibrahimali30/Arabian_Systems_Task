@@ -19,11 +19,12 @@ fun CityWeatherResponse.mapToUiModel(): ForecastUiModel {
             id,
             weather.main,
             weather.description,
-            "",
+            name,
             main.temp,
             main.feels_like,
             main.temp_max,
             main.temp_min,
+            wind.speed,
             dt
 
         )
@@ -50,11 +51,12 @@ fun CitySnipetWeatherResponse.mapToUiModel(): ForecastUiModel {
             0,
             weather.main,
             weather.description,
-            "",
+            city.name,
             main.temp,
             main.feels_like,
             main.temp_max,
             main.temp_min,
+            wind.speed,
             dt
         )
     }

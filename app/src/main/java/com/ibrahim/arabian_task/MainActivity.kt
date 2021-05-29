@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         observeScreenState()
         initSearchView()
         initRecyclerView()
+        viewModel.getForecast("Cairo")
     }
 
     private fun initRecyclerView() {
@@ -49,9 +50,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSearchView() {
 
-        searchView.isActivated = true
-        searchView.setIconifiedByDefault(false)
-        searchView.isIconified = false
+//        searchView.isActivated = true
+//        searchView.setIconifiedByDefault(false)
+//        searchView.isIconified = false
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

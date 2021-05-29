@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/bg"
     android:animateLayoutChanges="true"
     tools:context=".MainActivity">
 
@@ -32,7 +32,6 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="#FFFFFF"
         android:id="@+id/rvForecast"
         android:layout_width="match_parent"
         android:layout_height="0dp"

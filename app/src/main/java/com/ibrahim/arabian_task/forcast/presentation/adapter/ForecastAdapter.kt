@@ -5,11 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ibrahim.arabian_task.R
-import com.ibrahim.arabian_task.extensions.timeStampToFormattedString
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import kotlinx.android.synthetic.main.item_forecast.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.ArrayList()) :
@@ -56,8 +53,14 @@ class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.ArrayList
 
         fun bind(model: ForecastUiModel) {
             itemView.apply {
-                tvDay.text = model.dt.timeStampToFormattedString()
-
+                tvCityname.text = model.name
+                tvMain.text = model.main
+                tvDescription.text = model.description
+                tvTempMin.text = model.temp_min.toString()
+                tvTempMax.text = model.temp_max.toString()
+                tvTempFeel.text = "Feels like ${model.feels_like.toInt()}°C"
+                tvTemp.text = "${model.temp.toInt()}°C"
+                tvWind.text = "${model.windSpeed.toInt()}"
             }
         }
 

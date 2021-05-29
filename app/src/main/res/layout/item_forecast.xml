@@ -1,35 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:layout_width="match_parent"
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginHorizontal="16dp"
-    android:backgroundTint="#fff">
-<LinearLayout
-    android:paddingStart="16dp"
-    android:paddingBottom="16dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="16dp">
+    app:strokeColor="@color/gray"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="#130E51"
+            android:id="@+id/tvCityname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Cairo"
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <ImageView
+                android:layout_margin="16dp"
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/generic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView">
+
+                <TextView
+                    android:id="@+id/tvMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="clear sky"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView">
+
+                <TextView
+                    android:id="@+id/tvTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="35°C"
+                    android:textColor="@color/black"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:id="@+id/tvTempFeel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Feels like 33°C"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+
+                    />
+            </LinearLayout>
 
 
 
-    <TextView
-        android:textColor="#130E51"
-        android:id="@+id/tvDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="22-6-2021"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/low"/>
+
+            <TextView
+                android:id="@+id/tvTempMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="35°C"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginStart="-3dp"/>
+
+            <ImageView
+                android:layout_marginStart="8dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/low"/>
+
+            <TextView
+                android:id="@+id/tvTempMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="35°C"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginStart="-3dp" />
+
+            <ImageView
+                android:layout_marginStart="8dp"
+                android:padding="4dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/wind"/>
+
+            <TextView
+                android:layout_marginStart="4dp"
+                android:id="@+id/tvWind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
-</LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
 
