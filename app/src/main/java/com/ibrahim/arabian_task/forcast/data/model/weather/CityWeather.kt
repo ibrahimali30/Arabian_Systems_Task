@@ -3,7 +3,7 @@ package com.ibrahim.arabian_task.forcast.data.model.weather
 data class CityWeather(
     val clouds: Clouds,
     val coord: Coord,
-    val dt: Int,
+    val dt: Long,
     val id: Int,
     val main: Main,
     val name: String,

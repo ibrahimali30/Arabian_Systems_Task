@@ -23,7 +23,8 @@ fun CityWeatherResponse.mapToUiModel(): ForecastUiModel {
             main.temp,
             main.feels_like,
             main.temp_max,
-            main.temp_min
+            main.temp_min,
+            dt
 
         )
     }
@@ -53,7 +54,8 @@ fun CitySnipetWeatherResponse.mapToUiModel(): ForecastUiModel {
             main.temp,
             main.feels_like,
             main.temp_max,
-            main.temp_min
+            main.temp_min,
+            dt
         )
     }
 

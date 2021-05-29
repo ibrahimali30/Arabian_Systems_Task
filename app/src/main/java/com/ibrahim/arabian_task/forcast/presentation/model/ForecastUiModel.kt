@@ -14,4 +14,5 @@ data class ForecastUiModel(
     val feels_like: Double = 0.0,
     val temp_max: Double = 0.0,
     val temp_min: Double = 0.0,
+    val dt: Long =0,
 )

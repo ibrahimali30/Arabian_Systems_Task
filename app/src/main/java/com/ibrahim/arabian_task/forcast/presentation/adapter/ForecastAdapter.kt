@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ibrahim.arabian_task.R
+import com.ibrahim.arabian_task.extensions.timeStampToFormattedString
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import kotlinx.android.synthetic.main.item_forecast.view.*
 import java.text.SimpleDateFormat
@@ -55,16 +56,9 @@ class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.ArrayList
 
         fun bind(model: ForecastUiModel) {
             itemView.apply {
-                tvDay.text = "asfdsfsdf sdf dsf"
+                tvDay.text = model.dt.timeStampToFormattedString()
 
             }
-        }
-
-        private fun getFormattedDate(day: String): String? {
-            var format = SimpleDateFormat("yyyy-MM-dd")
-            val newDate: Date = format.parse(day)
-            format = SimpleDateFormat("EEE, dd MMM")
-            return format.format(newDate)
         }
 
     }
