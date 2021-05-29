@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
@@ -42,4 +45,29 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation "com.google.code.gson:gson:2.8.6"
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    // OkHttp, Retrofit
+    api 'com.squareup.okhttp3:okhttp:3.14.7'
+    api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+
+    //RX
+    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    api 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+
+    //dagger hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    androidTestImplementation 'androidx.test:rules:1.4.0-alpha05'
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+
+    api 'androidx.room:room-rxjava2:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
+    api 'androidx.room:room-runtime:2.2.5'
 }
