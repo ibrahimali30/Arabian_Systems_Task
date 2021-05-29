@@ -6,6 +6,7 @@ import com.ibrahim.arabian_task.forcast.domain.repsitory.ForecastRepository
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.data.source.local.ForecastLocalDataSource
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
+import com.ibrahim.arabian_task.forcast.presentation.model.mapToUiModel
 import javax.inject.Inject
 
 
@@ -18,7 +19,7 @@ class ForecastRepositoryImpl @Inject constructor(
     override fun fetchForecast(params: ForecastParams): Single<ForecastUiModel> {
         return forecastRemoteDataSource.fetchForecast(params)
                 .map { cityWeatherResponse ->
-                    null
+                    cityWeatherResponse.mapToUiModel()
                 }
     }
 

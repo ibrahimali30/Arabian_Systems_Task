@@ -6,5 +6,11 @@ import androidx.room.PrimaryKey
 @Entity
 data class ForecastUiModel(
     @PrimaryKey
-    val id: Int = 0
+    val id: Int = 0 ,
+    val main: String = "",
+    val weather: String = "",
+    val temp: Double = 0.0,
+    val feels_like: Double = 0.0,
+    val temp_max: Double = 0.0,
+    val temp_min: Double = 0.0,
 )
