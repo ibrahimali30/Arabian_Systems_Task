@@ -1,4 +1,4 @@
-package com.ibrahim.Arabian_Systems_Task
+package com.ibrahim.arabian_task
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

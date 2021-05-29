@@ -1,4 +1,4 @@
-package com.ibrahim.Arabian_Systems_Task
+package com.ibrahim.arabian_task
 
 import org.junit.Test
 
