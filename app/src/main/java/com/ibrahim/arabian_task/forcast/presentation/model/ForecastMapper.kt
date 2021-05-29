@@ -32,14 +32,6 @@ fun CityWeatherResponse.mapToUiModel(): ForecastUiModel {
 
 }
 
-private fun getFormattedDate(day: String): String? {
-    var format = SimpleDateFormat("yyyy-MM-dd")
-    val newDate: Date = format.parse(day)
-    format = SimpleDateFormat("EEE, dd MMM")
-    return format.format(newDate)
-}
-
-
 fun CitySnipetWeatherResponse.mapToUiModel(): ForecastUiModel {
     // TODO: 5/29/2021 check for lists sizes to avoid out of bounds exception
     val weatherMain = list[0]

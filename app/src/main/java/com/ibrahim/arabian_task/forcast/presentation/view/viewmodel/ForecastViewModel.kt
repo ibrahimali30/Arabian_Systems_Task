@@ -33,6 +33,10 @@ class ForecastViewModel @Inject constructor(
             }).addTo(compositeDisposable)
     }
 
+    fun insertForecastIntoLocalDB(forecastUiModel: ForecastUiModel) {
+        refreshForecastUseCase.insertForecastIntoLocalDB(forecastUiModel)
+    }
+
     private fun handleSuccessResponse(it: ForecastUiModel) {
         screenState.value = ForecastScreenState.SuccessAPIResponse(it)
     }

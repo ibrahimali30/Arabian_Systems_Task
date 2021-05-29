@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
+import com.ibrahim.arabian_task.forcast.presentation.adapter.Adapter
 import com.ibrahim.arabian_task.forcast.presentation.adapter.ForecastAdapter
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.viewmodel.ForecastViewModel
@@ -40,12 +41,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        adapter =
-            ForecastAdapter(
-                ArrayList()
-            )
+        adapter = Adapter(::onSaveButtonClicked)
+
         rvForecast.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         rvForecast.adapter = adapter
+    }
+
+    private fun onSaveButtonClicked(forecastUiModel: ForecastUiModel) {
+       viewModel.insertForecastIntoLocalDB(forecastUiModel)
     }
 
     private fun initSearchView() {

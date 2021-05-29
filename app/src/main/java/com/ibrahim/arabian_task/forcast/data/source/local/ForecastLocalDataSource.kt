@@ -2,6 +2,8 @@ package com.ibrahim.arabian_task.forcast.data.source.local
 
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
@@ -16,7 +18,11 @@ class ForecastLocalDataSource @Inject constructor(
     }
 
     fun insertForecastUiModel(forecastUiModel: ForecastUiModel) {
-         forecastDao.insertForecastUiModel(forecastUiModel)
+        Single.fromCallable {
+            forecastDao.insertForecastUiModel(forecastUiModel)
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 
 }

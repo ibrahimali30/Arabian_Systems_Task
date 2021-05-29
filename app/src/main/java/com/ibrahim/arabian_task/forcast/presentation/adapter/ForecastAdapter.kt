@@ -9,16 +9,19 @@ import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import kotlinx.android.synthetic.main.item_forecast.view.*
 import kotlin.collections.ArrayList
 
-class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.ArrayList()) :
+abstract class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.ArrayList()) :
     RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
+    open val layoutResourceId = R.layout.item_forecast
+
+    abstract fun bindExtra(model: ForecastUiModel, holder: ViewHolder)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_forecast, parent, false)
+            LayoutInflater.from(parent.context).inflate(layoutResourceId, parent, false)
         return ViewHolder(
             view
         )
@@ -30,6 +33,7 @@ class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.ArrayList
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
+        bindExtra(data[position], holder)
     }
 
     fun setList(list: List<ForecastUiModel>) {

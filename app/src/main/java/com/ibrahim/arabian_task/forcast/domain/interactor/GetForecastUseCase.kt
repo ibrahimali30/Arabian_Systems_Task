@@ -16,4 +16,8 @@ class GetForecastUseCase @Inject constructor(private val forecastRepository: For
         return forecastRepository.getForecastFromLocalDB(cityName)
     }
 
+    fun insertForecastIntoLocalDB(forecastUiModel: ForecastUiModel) {
+        return forecastRepository.insertForecastIntoLocalDB(forecastUiModel)
+    }
+
 }
