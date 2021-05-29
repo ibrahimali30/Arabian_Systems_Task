@@ -1,8 +1,8 @@
-package com.ibrahim.code95_task.forcast.presentation.di
+package com.ibrahim.arabian_task.forcast.presentation.di
 
 import android.app.Application
 import androidx.room.Room
-import com.ibrahim.code95_task.db.WeatherDatabase
+import com.ibrahim.arabian_task.db.WeatherDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

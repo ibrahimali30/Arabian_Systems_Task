@@ -13,7 +13,7 @@ interface ForecastDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertForecastUiModel(ForecastUiModel: ForecastUiModel):Long
 
-    @Query("select * from ForecastUiModel where name like :cityName limit 1")
+    @Query("select * from ForecastUiModel where :cityName like :cityName limit 1")
     fun getForecastByCityName(cityName: String): ForecastUiModel
 
 

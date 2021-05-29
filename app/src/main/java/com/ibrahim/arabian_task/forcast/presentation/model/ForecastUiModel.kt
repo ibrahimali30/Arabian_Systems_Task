@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class ForecastUiModel {
+data class ForecastUiModel(
     @PrimaryKey
     val id: Int = 0
-}
+)
