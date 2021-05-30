@@ -9,7 +9,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.ibrahim.arabian_task.forcast.presentation.view.activity.MainActivity
-import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastViewModel
+import com.ibrahim.arabian_task.forcast.presentation.viewmodel.CityForecastViewModel
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
@@ -34,7 +34,7 @@ class MainActivityTest {
     @Test
     fun test_loading_visibility() {
         //test loading visibility
-        viewmodel.screenState.postValue(ForecastViewModel.ForecastScreenState.Loading)
+        viewmodel.screenState.postValue(CityForecastViewModel.ForecastScreenState.Loading)
         onView(withId(R.id.progressBar)).check(matches(isDisplayed()))
     }
 
@@ -43,7 +43,7 @@ class MainActivityTest {
         //test binding data to recycler view from local source
         val forecastModelLocal = list[0]
         viewmodel.screenState.postValue(
-            ForecastViewModel.ForecastScreenState.SuccessAPIResponse(list)
+            CityForecastViewModel.ForecastScreenState.SuccessAPIResponse(list)
         )
         //check forecast name
         val tvCityname = onView(getView(R.id.tvCityname, forecastModelLocal.name))
@@ -74,7 +74,7 @@ class MainActivityTest {
         //test binding data to recycler view from remote source
         val forecastModelRemote = list[2]
         viewmodel.screenState.postValue(
-            ForecastViewModel.ForecastScreenState.SuccessAPIResponse(listOf(forecastModelRemote))
+            CityForecastViewModel.ForecastScreenState.SuccessAPIResponse(listOf(forecastModelRemote))
         )
         //check forecast name
         val tvCityname = onView(getView(R.id.tvCityname, forecastModelRemote.name))
@@ -97,7 +97,7 @@ class MainActivityTest {
     fun test_error_view_visibility() {
         // on Error check if error view and retry button is displayed
         viewmodel.screenState.postValue(
-            ForecastViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception("test exception msg"))
+            CityForecastViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception("test exception msg"))
         )
         onView(withId(R.id.tvErrorMsg)).check(matches(isDisplayed()))
         onView(withId(R.id.btRetry)).check(matches(isDisplayed()))
@@ -107,7 +107,7 @@ class MainActivityTest {
     @Test
     fun test_no_stored_data_view_visibility() {
         // simulate empty list
-        viewmodel.screenState.postValue(ForecastViewModel.ForecastScreenState.SuccessAPIResponse(listOf()))
+        viewmodel.screenState.postValue(CityForecastViewModel.ForecastScreenState.SuccessAPIResponse(listOf()))
 
         onView(withId(R.id.tvNoSoredData)).check(matches(isDisplayed()))
     }

@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class ForecastViewModel @Inject constructor(
+class CityForecastViewModel @Inject constructor(
         private val refreshForecastUseCase: GetForecastUseCase,
         private val forecastLocalUseCase: ForecastDataBaseUseCase
 ) : ViewModel() {

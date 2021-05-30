@@ -9,7 +9,7 @@ import com.ibrahim.arabian_task.R
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.adapter.FiveDaysForecastAdapter
-import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastRemoteViewModel
+import com.ibrahim.arabian_task.forcast.presentation.viewmodel.FiveDaysForecastViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_forecast_result.*
 import kotlinx.android.synthetic.main.layout_error_view.*
@@ -22,7 +22,7 @@ class ForecastResultFragment(
 ) : Fragment(R.layout.fragment_forecast_result){
 
     @Inject
-    lateinit var viewModel: ForecastRemoteViewModel
+    lateinit var viewModel: FiveDaysForecastViewModel
     lateinit var adapter: FiveDaysForecastAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,20 +50,20 @@ class ForecastResultFragment(
         })
     }
 
-    private fun onScreenStateChanged(state: ForecastRemoteViewModel.ForecastScreenState?) {
+    private fun onScreenStateChanged(state: FiveDaysForecastViewModel.ForecastScreenState?) {
         when (state) {
-            is ForecastRemoteViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
-            is ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
+            is FiveDaysForecastViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
+            is FiveDaysForecastViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
             else -> {}
         }
 
-        handleLoadingVisibility(state == ForecastRemoteViewModel.ForecastScreenState.Loading)
+        handleLoadingVisibility(state == FiveDaysForecastViewModel.ForecastScreenState.Loading)
         handleErrorViewsVisibility(state)
 
     }
 
-    private fun handleErrorViewsVisibility(state: ForecastRemoteViewModel.ForecastScreenState?) {
-        if (state is ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi)
+    private fun handleErrorViewsVisibility(state: FiveDaysForecastViewModel.ForecastScreenState?) {
+        if (state is FiveDaysForecastViewModel.ForecastScreenState.ErrorLoadingFromApi)
             errorViewLayoutFragment.visibility = View.VISIBLE
         else
             errorViewLayoutFragment.visibility = View.GONE

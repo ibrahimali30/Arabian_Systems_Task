@@ -13,7 +13,7 @@ import com.ibrahim.arabian_task.R
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.adapter.ForecastAdapter
 import com.ibrahim.arabian_task.forcast.presentation.view.fragment.ForecastResultFragment
-import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastViewModel
+import com.ibrahim.arabian_task.forcast.presentation.viewmodel.CityForecastViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_error_view.*
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: ForecastAdapter
 
     @Inject
-    lateinit var viewModel: ForecastViewModel
+    lateinit var viewModel: CityForecastViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,23 +101,23 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun onScreenStateChanged(state: ForecastViewModel.ForecastScreenState?) {
+    private fun onScreenStateChanged(state: CityForecastViewModel.ForecastScreenState?) {
         Log.d(TAG, "onScreenStateChanged: ${state.toString()}")
 
         when (state) {
-            is ForecastViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
-            is ForecastViewModel.ForecastScreenState.SuccessLocalData -> handleSuccess(state.data)
-            is ForecastViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
+            is CityForecastViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
+            is CityForecastViewModel.ForecastScreenState.SuccessLocalData -> handleSuccess(state.data)
+            is CityForecastViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
             else -> {}
         }
 
-        handleLoadingVisibility(state == ForecastViewModel.ForecastScreenState.Loading)
+        handleLoadingVisibility(state == CityForecastViewModel.ForecastScreenState.Loading)
         handleErrorViewsVisibility(state)
 
     }
 
-    private fun handleErrorViewsVisibility(state: ForecastViewModel.ForecastScreenState?) {
-        if (state is ForecastViewModel.ForecastScreenState.ErrorLoadingFromApi)
+    private fun handleErrorViewsVisibility(state: CityForecastViewModel.ForecastScreenState?) {
+        if (state is CityForecastViewModel.ForecastScreenState.ErrorLoadingFromApi)
             errorViewLayout.visibility = View.VISIBLE
         else
             errorViewLayout.visibility = View.GONE

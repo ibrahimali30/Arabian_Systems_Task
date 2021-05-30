@@ -12,7 +12,7 @@ import com.ibrahim.arabian_task.extensions.timeStampToFormattedString
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.activity.MainActivity
 import com.ibrahim.arabian_task.forcast.presentation.view.fragment.ForecastResultFragment
-import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastRemoteViewModel
+import com.ibrahim.arabian_task.forcast.presentation.viewmodel.FiveDaysForecastViewModel
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
@@ -54,9 +54,9 @@ class FiveDaysForecastFragmentTest {
     @Test
     fun test_loading_visibility() {
         //test loading visibility
-        viewmodel.screenState.postValue(ForecastRemoteViewModel.ForecastScreenState.Loading)
+        viewmodel.screenState.postValue(FiveDaysForecastViewModel.ForecastScreenState.Loading)
         onView(withId(R.id.constraintLayout)).check(matches(isDisplayed()))
-        viewmodel.screenState.postValue(ForecastRemoteViewModel.ForecastScreenState.Loading)
+        viewmodel.screenState.postValue(FiveDaysForecastViewModel.ForecastScreenState.Loading)
 
     }
 
@@ -64,7 +64,7 @@ class FiveDaysForecastFragmentTest {
     fun test_city_name_title_visibility() {
         //test loading visibility
         onView(withId(R.id.tvTitle)).check(matches(withText(forecastDetailsFragment.cityName)))
-        viewmodel.screenState.postValue(ForecastRemoteViewModel.ForecastScreenState.Loading)
+        viewmodel.screenState.postValue(FiveDaysForecastViewModel.ForecastScreenState.Loading)
 
     }
 
@@ -73,7 +73,7 @@ class FiveDaysForecastFragmentTest {
         //test binding data to recycler view from remote source
         val forecastModelRemote = list[2]
         viewmodel.screenState.postValue(
-            ForecastRemoteViewModel.ForecastScreenState.SuccessAPIResponse(listOf(forecastModelRemote))
+            FiveDaysForecastViewModel.ForecastScreenState.SuccessAPIResponse(listOf(forecastModelRemote))
         )
         //check forecast name
         val tvCityname = onView(getView(R.id.tvDate, forecastModelRemote.dt.timeStampToFormattedString()))
@@ -96,7 +96,7 @@ class FiveDaysForecastFragmentTest {
     fun test_error_view_visibility() {
         // on Error check if error view and retry button is displayed
         viewmodel.screenState.postValue(
-            ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception("test exception msg"))
+            FiveDaysForecastViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception("test exception msg"))
         )
         onView(
             withId(R.id.errorViewLayoutFragment)
