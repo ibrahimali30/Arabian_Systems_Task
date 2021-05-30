@@ -33,7 +33,7 @@ class ForecastRepositoryImpl @Inject constructor(
     }
 
     override fun getForecastFromLocalDB(): Flowable<List<ForecastUiModel>> {
-        return forecastLocalDataSource.getForecastByCityName()
+        return forecastLocalDataSource.getSavedForecasts()
     }
 
     override fun insertOrDelete(forecastUiModel: ForecastUiModel) {

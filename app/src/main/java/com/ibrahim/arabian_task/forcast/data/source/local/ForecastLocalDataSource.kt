@@ -12,7 +12,7 @@ class ForecastLocalDataSource @Inject constructor(
     private val forecastDao: ForecastDao
 ) {
 
-    fun getForecastByCityName(): Flowable<List<ForecastUiModel>> {
+    fun getSavedForecasts(): Flowable<List<ForecastUiModel>> {
         return forecastDao.getSavedForecasts()
     }
 
