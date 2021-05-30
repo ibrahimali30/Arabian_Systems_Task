@@ -15,7 +15,7 @@ interface ForecastDao {
     fun deleteForecastUiModel(ForecastUiModel: ForecastUiModel)
 
     @Query("select * from ForecastUiModel")
-    fun getForecastByCityName(): Flowable<List<ForecastUiModel>>
+    fun getSavedForecasts(): Flowable<List<ForecastUiModel>>
 
 
 }

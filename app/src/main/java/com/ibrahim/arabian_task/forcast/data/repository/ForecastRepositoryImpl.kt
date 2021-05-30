@@ -19,13 +19,13 @@ class ForecastRepositoryImpl @Inject constructor(
 ) : ForecastRepository {
 
     override fun fetchForecast(params: ForecastParams): Single<List<ForecastUiModel>> {
-        if (params.endPoint == EndPoint.find){
-            return forecastRemoteDataSource.fetchForecast(params)
+        return if (params.endPoint == EndPoint.find){
+            forecastRemoteDataSource.fetchForecast(params)
                     .map { cityWeatherResponse ->
                         cityWeatherResponse.mapToUiModel()
                     }
         }else{
-            return forecastRemoteDataSource.fetchForecastSnipet(params)
+            forecastRemoteDataSource.fetchForecastSnipet(params)
                     .map { citySnipetWeatherResponse ->
                         citySnipetWeatherResponse.mapToUiModel()
                     }

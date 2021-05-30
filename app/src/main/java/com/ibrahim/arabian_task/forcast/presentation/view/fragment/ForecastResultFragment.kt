@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastRemoteViewModel
 import com.ibrahim.arabian_task.R
-import com.ibrahim.arabian_task.forcast.domain.entity.EndPoint
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.adapter.FiveDaysForecastAdapter
-import com.ibrahim.arabian_task.forcast.presentation.viewmodel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_forecast_result.*
 import kotlinx.android.synthetic.main.layout_error_view.*
@@ -27,11 +24,6 @@ class ForecastResultFragment(
     @Inject
     lateinit var viewModel: ForecastRemoteViewModel
     lateinit var adapter: FiveDaysForecastAdapter
-
-
-    private val sharedViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

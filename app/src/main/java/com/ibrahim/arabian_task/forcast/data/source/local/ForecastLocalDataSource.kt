@@ -13,7 +13,7 @@ class ForecastLocalDataSource @Inject constructor(
 ) {
 
     fun getForecastByCityName(): Flowable<List<ForecastUiModel>> {
-        return forecastDao.getForecastByCityName()
+        return forecastDao.getSavedForecasts()
     }
 
     fun insertOrDelete(forecastUiModel: ForecastUiModel) {

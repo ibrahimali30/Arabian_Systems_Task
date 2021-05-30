@@ -10,7 +10,7 @@ import com.ibrahim.arabian_task.forcast.data.source.local.ForecastDao
     ],
     version = 2 , exportSchema = false
 )
-//@TypeConverters(DataConverter::class)
+
 abstract class WeatherDatabase : RoomDatabase() {
 
     abstract fun forecastDao(): ForecastDao

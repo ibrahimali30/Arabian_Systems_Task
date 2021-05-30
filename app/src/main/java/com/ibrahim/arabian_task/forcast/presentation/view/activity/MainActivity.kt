@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleSuccess(data: List<ForecastUiModel>) {
-        if (data.isEmpty()){
+        if (data.isEmpty() && !viewModel.isInSearchMode){
             tvNoSoredData.visibility = View.VISIBLE
         }else{
             tvNoSoredData.visibility = View.INVISIBLE
