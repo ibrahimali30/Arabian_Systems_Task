@@ -64,9 +64,9 @@ class ForecastResultFragment(
 
     private fun handleErrorViewsVisibility(state: ForecastRemoteViewModel.ForecastScreenState?) {
         if (state is ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi)
-            errorViewLayout.visibility = View.VISIBLE
+            errorViewLayoutFragment.visibility = View.VISIBLE
         else
-            errorViewLayout.visibility = View.GONE
+            errorViewLayoutFragment.visibility = View.GONE
 
     }
 

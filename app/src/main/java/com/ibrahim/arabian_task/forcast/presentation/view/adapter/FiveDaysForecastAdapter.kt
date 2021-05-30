@@ -41,7 +41,7 @@ class FiveDaysForecastAdapter(
 
         fun bind(model: ForecastUiModel) {
             itemView.apply {
-                tvCityname.text = model.dt.timeStampToFormattedString()
+                tvDate.text = model.dt.timeStampToFormattedString()
                 tvMain.text = model.main
                 tvDescription.text = model.description
                 tvTempMin.text = model.temp_min.toString()

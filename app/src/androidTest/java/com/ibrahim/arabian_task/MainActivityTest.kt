@@ -77,7 +77,9 @@ class MainActivityTest {
     fun test_binding_data_to_recycle_view_from_remote_source() {
         //test binding data to recycler view from remote source
         val forecastModelRemote = list[2]
-        viewmodel.screenState.postValue(ForecastViewModel.ForecastScreenState.SuccessAPIResponse(listOf(forecastModelRemote)))
+        viewmodel.screenState.postValue(
+            ForecastViewModel.ForecastScreenState.SuccessAPIResponse(listOf(forecastModelRemote))
+        )
         //check forecast name
         val tvCityname = onView(getView(R.id.tvCityname, forecastModelRemote.name))
         tvCityname.check(matches(withText(forecastModelRemote.name)))

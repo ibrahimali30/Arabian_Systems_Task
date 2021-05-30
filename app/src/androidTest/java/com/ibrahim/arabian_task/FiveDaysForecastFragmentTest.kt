@@ -11,6 +11,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import androidx.transition.Slide
+import com.ibrahim.arabian_task.extensions.timeStampToFormattedString
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.activity.MainActivity
 import com.ibrahim.arabian_task.forcast.presentation.view.fragment.ForecastResultFragment
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_forecast_result.*
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.core.IsInstanceOf
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,24 +34,21 @@ class FiveDaysForecastFragmentTest {
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
-    val adapter by lazy { activity.adapter }
     val viewmodel by lazy { noteDetailsFragment.viewModel }
-
     lateinit var noteDetailsFragment: ForecastResultFragment
-    lateinit var activity: MainActivity
-
     val list by lazy {
         Utils.getForecastUiModeList()
     }
 
-    init {
-        activity = mActivityTestRule.activity
+    @Before
+    fun setUp(){
+        mActivityTestRule.activity
         navigateToForecastFragment(list[0])
+        Thread.sleep(1000)
     }
 
     private fun navigateToForecastFragment(forecastUiModel: ForecastUiModel) {
         noteDetailsFragment = ForecastResultFragment(forecastUiModel.name)
-        noteDetailsFragment.enterTransition = Slide(Gravity.END)
 
         mActivityTestRule.activity.supportFragmentManager.beginTransaction()
             .replace(android.R.id.content, noteDetailsFragment)
@@ -61,12 +60,54 @@ class FiveDaysForecastFragmentTest {
 
     @Test
     fun test_loading_visibility() {
-        navigateToForecastFragment(list[0])
         //test loading visibility
         viewmodel.screenState.postValue(ForecastRemoteViewModel.ForecastScreenState.Loading)
         onView(withId(R.id.constraintLayout)).check(matches(isDisplayed()))
-
         viewmodel.screenState.postValue(ForecastRemoteViewModel.ForecastScreenState.Loading)
 
+    }
+
+    @Test
+    fun test_binding_data_to_recycle_view_from_remote_source() {
+        //test binding data to recycler view from remote source
+        val forecastModelRemote = list[2]
+        viewmodel.screenState.postValue(
+            ForecastRemoteViewModel.ForecastScreenState.SuccessAPIResponse(listOf(forecastModelRemote))
+        )
+        //check forecast name
+        val tvCityname = onView(getView(R.id.tvDate, forecastModelRemote.dt.timeStampToFormattedString()))
+        tvCityname.check(matches(withText(forecastModelRemote.dt.timeStampToFormattedString())))
+
+        //check forecast main
+        val tvMain = onView(getView(R.id.tvMain, forecastModelRemote.main))
+        tvMain.check(matches(withText(forecastModelRemote.main)))
+
+        //check forecast description
+        val tvDescription = onView(getView(R.id.tvDescription, forecastModelRemote.description))
+        tvDescription.check(matches(withText(forecastModelRemote.description)))
+
+        //check forecast temp
+        val tvTemp = onView(getView(R.id.tvTemp, "${forecastModelRemote.temp.toInt()}°C"))
+        tvTemp.check(matches(withText("${forecastModelRemote.temp.toInt()}°C")))
+    }
+
+    @Test
+    fun test_error_view_visibility() {
+        // on Error check if error view and retry button is displayed
+        viewmodel.screenState.postValue(
+            ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception("test exception msg"))
+        )
+        onView(
+            withId(R.id.tvErrorMsg)
+        ).check(matches(isDisplayed()))
+        onView(withId(R.id.btRetry)).check(matches(isDisplayed()))
+        // TODO: 5/30/2021 test btRetry on click
+    }
+
+
+    private fun getView(id: Int, text: String): Matcher<View>? {
+        return allOf(
+            withId(id), withText(text)
+        )
     }
 }

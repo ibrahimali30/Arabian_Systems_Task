@@ -20,7 +20,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="12dp"
             android:textColor="#130E51"
-            android:id="@+id/tvCityname"
+            android:id="@+id/tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Cairo"
