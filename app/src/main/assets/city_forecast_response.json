@@ -1,0 +1,44 @@
+{
+  "message": "accurate",
+  "cod": "200",
+  "count": 1,
+  "list": [
+    {
+      "id": 360630,
+      "name": "Cairo",
+      "coord": {
+        "lat": 30.0626,
+        "lon": 31.2497
+      },
+      "main": {
+        "temp": 21.98,
+        "feels_like": 21.7,
+        "temp_min": 21.67,
+        "temp_max": 22.22,
+        "pressure": 1013,
+        "humidity": 56
+      },
+      "dt": 1622344147,
+      "wind": {
+        "speed": 4.63,
+        "deg": 60
+      },
+      "sys": {
+        "country": "EG"
+      },
+      "rain": null,
+      "snow": null,
+      "clouds": {
+        "all": 0
+      },
+      "weather": [
+        {
+          "id": 800,
+          "main": "Clear",
+          "description": "clear sky",
+          "icon": "01d"
+        }
+      ]
+    }
+  ]
+}
