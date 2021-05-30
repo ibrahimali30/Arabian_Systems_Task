@@ -1,8 +1,9 @@
 package com.ibrahim.arabian_task.db
 
-import androidx.room.*
-import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.ibrahim.arabian_task.forcast.data.source.local.ForecastDao
+import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 
 @Database(
     entities = [

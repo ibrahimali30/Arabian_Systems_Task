@@ -2,23 +2,19 @@ package com.ibrahim.arabian_task
 
 
 import android.view.View
-import androidx.room.PrimaryKey
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.activity.MainActivity
 import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastViewModel
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.core.IsInstanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.Exception
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)

@@ -26,23 +26,23 @@ object TestUtils {
 
 
     fun getWeatherResponse(): CityWeatherResponse{
-        val notes: CityWeatherResponse = Gson()
+        val forecasts: CityWeatherResponse = Gson()
             .fromJson(
                 getJson("city_forecast_response.json"),
                 object: TypeToken<CityWeatherResponse>() {}.type
             )
 
-        return notes
+        return forecasts
     }
 
     fun getWeatherSnipetResponse(): CitySnipetWeatherResponse{
-        val notes: CitySnipetWeatherResponse = Gson()
+        val forecasts: CitySnipetWeatherResponse = Gson()
             .fromJson(
                 getJson("response_snipet.json"),
                 object: TypeToken<CitySnipetWeatherResponse>() {}.type
             )
 
-        return notes
+        return forecasts
     }
 
 

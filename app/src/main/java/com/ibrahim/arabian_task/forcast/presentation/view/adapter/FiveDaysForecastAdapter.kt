@@ -1,10 +1,8 @@
 package com.ibrahim.arabian_task.forcast.presentation.view.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ibrahim.arabian_task.R
 import com.ibrahim.arabian_task.extensions.timeStampToFormattedString

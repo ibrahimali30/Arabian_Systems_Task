@@ -5,15 +5,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastRemoteViewModel
 import com.ibrahim.arabian_task.R
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.adapter.FiveDaysForecastAdapter
+import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastRemoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_forecast_result.*
 import kotlinx.android.synthetic.main.layout_error_view.*
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -33,8 +32,7 @@ class ForecastResultFragment(
         initRecyclerView()
 
         tvTitle.text = cityName
-//        viewModel.getForecast(cityName)
-        viewModel.screenState.value = ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception(""))
+        viewModel.getForecast(cityName)
 
     }
 

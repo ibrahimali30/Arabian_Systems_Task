@@ -2,10 +2,8 @@ package com.ibrahim.arabian_task.forcast.data.source.remote
 
 import com.ibrahim.arabian_task.forcast.data.model.snipet.CitySnipetWeatherResponse
 import com.ibrahim.arabian_task.forcast.data.model.weather.CityWeatherResponse
-import io.reactivex.Single
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Single
 import javax.inject.Inject
 
 class ForecastRemoteDataSource @Inject constructor(

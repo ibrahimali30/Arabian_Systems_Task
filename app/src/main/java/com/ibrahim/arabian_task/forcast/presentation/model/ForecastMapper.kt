@@ -3,8 +3,6 @@ package com.ibrahim.arabian_task.forcast.presentation.model
 import com.ibrahim.arabian_task.extensions.timeStampToFormattedString
 import com.ibrahim.arabian_task.forcast.data.model.snipet.CitySnipetWeatherResponse
 import com.ibrahim.arabian_task.forcast.data.model.weather.CityWeatherResponse
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 fun CityWeatherResponse.mapToUiModel(): List<ForecastUiModel> {

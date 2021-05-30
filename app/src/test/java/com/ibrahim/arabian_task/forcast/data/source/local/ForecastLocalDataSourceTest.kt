@@ -9,11 +9,9 @@ import com.ibrahim.arabian_task.db.WeatherDatabase
 import com.ibrahim.arabian_task.utils.RxSchedulerRule
 import com.ibrahim.arabian_task.utils.TestUtils
 import io.mockk.MockKAnnotations
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule

@@ -1,19 +1,17 @@
 package com.ibrahim.arabian_task.forcast.presentation.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Slide
 import com.ibrahim.arabian_task.R
-import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
-import com.ibrahim.arabian_task.forcast.presentation.view.adapter.ForecastAdapter
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
+import com.ibrahim.arabian_task.forcast.presentation.view.adapter.ForecastAdapter
 import com.ibrahim.arabian_task.forcast.presentation.view.fragment.ForecastResultFragment
 import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,12 +56,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToForecastFragment(forecastUiModel: ForecastUiModel) {
-        val noteDetailsFragment = ForecastResultFragment(forecastUiModel.name)
-        noteDetailsFragment.enterTransition = Slide(Gravity.END)
+        val forecastDetailsFragment = ForecastResultFragment(forecastUiModel.name)
+        forecastDetailsFragment.enterTransition = Slide(Gravity.END)
 
         supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, noteDetailsFragment)
-                .addToBackStack(noteDetailsFragment::class.java.name)
+                .replace(android.R.id.content, forecastDetailsFragment)
+                .addToBackStack(forecastDetailsFragment::class.java.name)
                 .commit()
     }
 
@@ -84,8 +82,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchView.isActivated = true
-//        searchView.setIconifiedByDefault(false)
-//        searchView.isIconified = false
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -112,9 +108,6 @@ class MainActivity : AppCompatActivity() {
             is ForecastViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
             is ForecastViewModel.ForecastScreenState.SuccessLocalData -> handleSuccess(state.data)
             is ForecastViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
-//            is ForecastViewModel.ForecastScreenState.SuccessLocalDB -> handleSuccess(state.data)
-//            is ForecastViewModel.ForecastScreenState.ErrorLoadingFromLocalDB ->
-//                handleErrorLoadingFromLocalDB(state.error , state.retry)
             else -> {}
         }
 

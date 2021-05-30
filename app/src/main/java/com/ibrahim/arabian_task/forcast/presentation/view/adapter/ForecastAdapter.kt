@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ibrahim.arabian_task.R
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import kotlinx.android.synthetic.main.item_forecast.view.*
-import java.util.logging.Handler
-import kotlin.collections.ArrayList
 
 class ForecastAdapter(
         val onAddOrRemoveButtonClicked: (model: ForecastUiModel) -> Unit,
