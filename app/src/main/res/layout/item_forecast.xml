@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,15 +13,16 @@
     app:strokeWidth="1dp">
 
     <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvCityname"
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:textColor="#130E51"
-            android:id="@+id/tvCityname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Cairo"
@@ -128,7 +130,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/low"/>
+                android:src="@drawable/high"/>
 
             <TextView
                 android:id="@+id/tvTempMax"
