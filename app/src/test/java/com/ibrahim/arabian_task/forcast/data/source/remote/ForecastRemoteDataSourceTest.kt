@@ -33,15 +33,15 @@ class ForecastRemoteDataSourceTest {
     val taskExecutorRule = InstantTaskExecutorRule()
     @get:Rule
     val rxSchedulerRule = RxSchedulerRule()
-    lateinit var wordsLocalDataSource: ForecastRemoteDataSource
+    lateinit var forecsatLocalDataSource: ForecastRemoteDataSource
     @MockK
-    private lateinit var wordsApiService: ForecastApiService
+    private lateinit var forecsatApiService: ForecastApiService
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
 
-        wordsLocalDataSource =  ForecastRemoteDataSource(wordsApiService)
+        forecsatLocalDataSource =  ForecastRemoteDataSource(forecsatApiService)
     }
 
     @Test
@@ -49,7 +49,7 @@ class ForecastRemoteDataSourceTest {
         val params = ForecastParams("Cairo",1,"metric",EndPoint.find)
         val cityWeatherResponse = TestUtils.getWeatherResponse()
         every {
-            wordsApiService.getForecast(
+            forecsatApiService.getForecast(
                 params.endPoint.name,
                 params.cityName,
                 params.cnt,
@@ -57,13 +57,13 @@ class ForecastRemoteDataSourceTest {
             )
         } returns Single.just(cityWeatherResponse)
 
-        wordsLocalDataSource.fetchForecast(params)
+        forecsatLocalDataSource.fetchForecast(params)
             .subscribe { stringResponse, t2 ->
                 Truth.assertThat(stringResponse).isEqualTo(cityWeatherResponse)
             }
 
         verify {
-            wordsApiService.getForecast(
+            forecsatApiService.getForecast(
                 params.endPoint.name,
                 params.cityName,
                 params.cnt,
@@ -77,7 +77,7 @@ class ForecastRemoteDataSourceTest {
         val params = ForecastParams("Cairo",1,"metric",EndPoint.find)
         val citySnipetWeatherResponse = TestUtils.getWeatherSnipetResponse()
         every {
-            wordsApiService.fetchForecastSnipet(
+            forecsatApiService.fetchForecastSnipet(
                 params.endPoint.name,
                 params.cityName,
                 params.cnt,
@@ -85,13 +85,13 @@ class ForecastRemoteDataSourceTest {
             )
         } returns Single.just(citySnipetWeatherResponse)
 
-        wordsLocalDataSource.fetchForecastSnipet(params)
+        forecsatLocalDataSource.fetchForecastSnipet(params)
             .subscribe { stringResponse, t2 ->
                 Truth.assertThat(stringResponse).isEqualTo(citySnipetWeatherResponse)
             }
 
         verify {
-            wordsApiService.fetchForecastSnipet(
+            forecsatApiService.fetchForecastSnipet(
                 params.endPoint.name,
                 params.cityName,
                 params.cnt,

@@ -30,49 +30,49 @@ class ForecastLocalDataSourceTest {
     val taskExecutorRule = InstantTaskExecutorRule()
     @get:Rule
     val rxSchedulerRule = RxSchedulerRule()
-    lateinit var wordsLocalDataSource: ForecastLocalDataSource
-    private lateinit var wordsDatabase: WeatherDatabase
-    private lateinit var wordsDao: ForecastDao
+    lateinit var forecsatLocalDataSource: ForecastLocalDataSource
+    private lateinit var forecsatDatabase: WeatherDatabase
+    private lateinit var forecsatDao: ForecastDao
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
 
-        wordsDatabase = Room.inMemoryDatabaseBuilder(
+        forecsatDatabase = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             WeatherDatabase::class.java
         ).allowMainThreadQueries()
             .build()
 
-        wordsDao = wordsDatabase.forecastDao()
-        wordsLocalDataSource =  ForecastLocalDataSource(wordsDao)
+        forecsatDao = forecsatDatabase.forecastDao()
+        forecsatLocalDataSource =  ForecastLocalDataSource(forecsatDao)
     }
 
-    private val wordsMok = TestUtils.getForecastUiModeList()[0]
+    private val forecsatMok = TestUtils.getForecastUiModeList()[0]
 
 
     @Test
     fun getSavedForecasts() {
-        wordsDao.insertForecastUiModel(wordsMok)
+        forecsatDao.insertForecastUiModel(forecsatMok)
         // Then
 
-        wordsLocalDataSource.getSavedForecasts()
+        forecsatLocalDataSource.getSavedForecasts()
             .subscribe {
                 val savedForecast = it[0]
-                Truth.assertThat(savedForecast.name).isEqualTo(wordsMok.name)
-                Truth.assertThat(savedForecast.main).isEqualTo(wordsMok.main)
-                Truth.assertThat(savedForecast.temp).isEqualTo(wordsMok.temp)
-                Truth.assertThat(savedForecast.description).isEqualTo(wordsMok.description)
+                Truth.assertThat(savedForecast.name).isEqualTo(forecsatMok.name)
+                Truth.assertThat(savedForecast.main).isEqualTo(forecsatMok.main)
+                Truth.assertThat(savedForecast.temp).isEqualTo(forecsatMok.temp)
+                Truth.assertThat(savedForecast.description).isEqualTo(forecsatMok.description)
                 Truth.assertThat(savedForecast.name).isNotEqualTo("a wrong value")
             }
     }
 
     @Test
     fun testInsertForecastUiModel() {
-        val forecastuimodel = wordsMok.copy(isFavourite = false)
-        wordsLocalDataSource.insertOrDelete(forecastuimodel)
+        val forecastuimodel = forecsatMok.copy(isFavourite = false)
+        forecsatLocalDataSource.insertOrDelete(forecastuimodel)
 
-        wordsLocalDataSource.getSavedForecasts()
+        forecsatLocalDataSource.getSavedForecasts()
             .subscribe ({
                 val savedForecast = it.find { it.name == forecastuimodel.name}!!
                 Truth.assertThat(savedForecast.name).isEqualTo(forecastuimodel.name)
@@ -86,10 +86,10 @@ class ForecastLocalDataSourceTest {
 
     @Test
     fun testDeleteForecastUiModel() {
-        val forecastuimodel = wordsMok.copy(isFavourite = true)
-        wordsLocalDataSource.insertOrDelete(forecastuimodel)
+        val forecastuimodel = forecsatMok.copy(isFavourite = true)
+        forecsatLocalDataSource.insertOrDelete(forecastuimodel)
 
-        wordsLocalDataSource.getSavedForecasts()
+        forecsatLocalDataSource.getSavedForecasts()
             .subscribe({
                 val savedForecast = it.find { it.name == forecastuimodel.name}
                 Truth.assertThat(savedForecast).isEqualTo(null)
