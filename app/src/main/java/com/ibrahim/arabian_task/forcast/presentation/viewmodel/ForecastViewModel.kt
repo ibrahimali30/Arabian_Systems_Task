@@ -4,6 +4,7 @@ package com.ibrahim.arabian_task.forcast.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
+import com.ibrahim.arabian_task.forcast.domain.interactor.ForecastDataBaseUseCase
 import com.ibrahim.arabian_task.forcast.domain.interactor.GetForecastUseCase
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,13 +15,14 @@ import javax.inject.Inject
 
 
 class ForecastViewModel @Inject constructor(
-        private val refreshForecastUseCase: GetForecastUseCase
+        private val refreshForecastUseCase: GetForecastUseCase,
+        private val forecastLocalUseCase: ForecastDataBaseUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     private var savedForecastList = mutableListOf<ForecastUiModel>()
     val screenState by lazy { MutableLiveData<ForecastScreenState>() }
-    val isInSearchMode = false
+    var isInSearchMode = false
 
     fun getForecast(citName: String) {
         getForecast(ForecastParams(citName))
@@ -48,20 +50,21 @@ class ForecastViewModel @Inject constructor(
     }
 
     fun getSavedForecast() {
-        refreshForecastUseCase.getForecastFromLocalDB()
+        forecastLocalUseCase.getForecastFromLocalDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map {
                     return@map it.apply { it.map { it.isFavourite = true } }
                 }
                 .subscribe({
-                    handleLocalData(it)
+                    if (!isInSearchMode)
+                        handleLocalData(it)
                 }, {}).addTo(compositeDisposable)
     }
 
 
     fun insertOrDelete(forecastUiModel: ForecastUiModel) {
-        refreshForecastUseCase.insertOrDelete(forecastUiModel)
+        forecastLocalUseCase.insertOrDelete(forecastUiModel)
     }
 
     private fun handleSuccessResponse(it: List<ForecastUiModel>) {

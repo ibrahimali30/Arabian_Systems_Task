@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 class ForecastRemoteViewModel @Inject constructor(
-        private val refreshForecastUseCase: GetForecastUseCase
+        private val getForecastUseCase: GetForecastUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -22,7 +22,7 @@ class ForecastRemoteViewModel @Inject constructor(
 
     fun getForecast(params: ForecastParams) {
         screenState.value = ForecastScreenState.Loading
-        refreshForecastUseCase.fetchForecast(params)
+        getForecastUseCase.fetchForecast(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

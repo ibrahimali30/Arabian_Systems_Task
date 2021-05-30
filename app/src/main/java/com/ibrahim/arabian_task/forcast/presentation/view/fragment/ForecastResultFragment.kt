@@ -39,7 +39,7 @@ class ForecastResultFragment(
         initRecyclerView()
 
         tvTitle.text = cityName
-        viewModel.getForecast(ForecastParams(cityName,5))
+        viewModel.getForecast(ForecastParams(cityName,100))
 
     }
 

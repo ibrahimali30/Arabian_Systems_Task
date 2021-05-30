@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Slide
 import com.ibrahim.arabian_task.R
+import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.presentation.view.adapter.ForecastAdapter
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.fragment.ForecastResultFragment
@@ -67,17 +68,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSearchView() {
-Handler().postDelayed({ searchView.clearFocus()},3000)
+
         searchView.setOnQueryTextFocusChangeListener { v, hasFocus ->
             Log.d("TAG", "initSearchView: $hasFocus")
+            viewModel.isInSearchMode = hasFocus
+            if (!hasFocus){
+                viewModel.getSavedForecast()
+                searchView.setQuery("",false)
+            }
+
         }
         searchView.setOnCloseListener {
             searchView.clearFocus()
             return@setOnCloseListener false
-        }
-
-        searchView.findViewById<View>(R.id.search_src_text).setOnClickListener {
-            searchView.clearFocus()
         }
 
         searchView.isActivated = true
@@ -128,22 +131,19 @@ Handler().postDelayed({ searchView.clearFocus()},3000)
 
     }
 
-
-    private fun handleErrorLoadingFromLocalDB(error: Throwable?, retry: () -> Unit) {
+    private fun handleErrorLoadingFromApi(error: Throwable) {
         btRetry.setOnClickListener {
-//            retry.invoke()
             viewModel.getForecast(searchView.query.toString())
         }
     }
 
-    private fun handleErrorLoadingFromApi(error: Throwable) {
-        Log.d(TAG, "handleErrorLoadingFromApi: ")
-    }
-
     private fun handleSuccess(data: List<ForecastUiModel>) {
-
+        if (data.isEmpty()){
+            tvNoSoredData.visibility = View.VISIBLE
+        }else{
+            tvNoSoredData.visibility = View.INVISIBLE
+        }
         adapter.setList(data)
-        adapter.notifyDataSetChanged()
     }
 
     private fun handleLoadingVisibility(show: Boolean) {

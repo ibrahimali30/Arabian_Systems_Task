@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ibrahim.arabian_task.R
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
@@ -13,10 +15,21 @@ import kotlin.collections.ArrayList
 
 class ForecastAdapter(
         val onAddOrRemoveButtonClicked: (model: ForecastUiModel) -> Unit,
-        val onAForecastItemClicked: (model: ForecastUiModel) -> Unit,
-        val data: ArrayList<ForecastUiModel> = java.util.ArrayList()) :
+        val onAForecastItemClicked: (model: ForecastUiModel) -> Unit
+) :
     RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
+    val commitCallback = Runnable {}
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ForecastUiModel>() {
+
+        override fun areItemsTheSame(oldItem: ForecastUiModel, newItem: ForecastUiModel): Boolean {
+            return oldItem.name == newItem.name
+        }
+        override fun areContentsTheSame(oldItem: ForecastUiModel, newItem: ForecastUiModel): Boolean {
+            return oldItem == newItem
+        }
+    }
+    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,15 +43,17 @@ class ForecastAdapter(
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return differ.currentList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val forecastUiModel = data[position]
+        val forecastUiModel = differ.currentList[position]
         holder.bind(forecastUiModel)
 
         holder.itemView.btSave.setOnClickListener {
-            onAddOrRemoveButtonClicked.invoke(forecastUiModel)
+            onAddOrRemoveButtonClicked.invoke(forecastUiModel.copy())
+            forecastUiModel.isFavourite = !forecastUiModel.isFavourite
+            notifyItemChanged(position)
         }
 
         holder.itemView.setOnClickListener {
@@ -47,20 +62,11 @@ class ForecastAdapter(
     }
 
     fun setList(list: List<ForecastUiModel>) {
-        data.clear()
-        data.addAll(list)
-        notifyDataSetChanged()
+        differ.submitList(list, commitCallback)
     }
 
     fun clear() {
-        data.clear()
-        notifyDataSetChanged()
-    }
-
-    fun setList(list: ForecastUiModel) {
-        data.clear()
-        data.add(list)
-        notifyDataSetChanged()
+        differ.submitList(listOf(), commitCallback)
     }
 
     class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {

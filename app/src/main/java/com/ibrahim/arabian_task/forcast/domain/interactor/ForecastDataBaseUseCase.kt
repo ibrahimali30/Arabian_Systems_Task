@@ -7,10 +7,14 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class GetForecastUseCase @Inject constructor(private val forecastRepository: ForecastRepository) {
+class ForecastDataBaseUseCase @Inject constructor(private val forecastRepository: ForecastRepository) {
 
-    fun fetchForecast(params: ForecastParams): Single<List<ForecastUiModel>> {
-        return forecastRepository.fetchForecast(params)
+    fun getForecastFromLocalDB(): Flowable<List<ForecastUiModel>> {
+        return forecastRepository.getForecastFromLocalDB()
+    }
+
+    fun insertOrDelete(forecastUiModel: ForecastUiModel) {
+        return forecastRepository.insertOrDelete(forecastUiModel)
     }
 
 }
