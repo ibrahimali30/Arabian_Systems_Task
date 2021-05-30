@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastRemoteViewModel
 import com.ibrahim.arabian_task.R
+import com.ibrahim.arabian_task.forcast.domain.entity.EndPoint
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.presentation.view.adapter.FiveDaysForecastAdapter
@@ -39,7 +40,7 @@ class ForecastResultFragment(
         initRecyclerView()
 
         tvTitle.text = cityName
-        viewModel.getForecast(ForecastParams(cityName,100))
+        viewModel.getForecast(cityName)
 
     }
 

@@ -3,6 +3,7 @@ package com.ibrahim.arabian_task.forcast.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ibrahim.arabian_task.forcast.domain.entity.EndPoint
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.domain.interactor.GetForecastUseCase
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
@@ -19,6 +20,10 @@ class ForecastRemoteViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
     val screenState by lazy { MutableLiveData<ForecastScreenState>() }
+
+    fun getForecast(cityName: String) {
+        getForecast(ForecastParams(cityName, 100, endPoint = EndPoint.forecast))
+    }
 
     fun getForecast(params: ForecastParams) {
         screenState.value = ForecastScreenState.Loading

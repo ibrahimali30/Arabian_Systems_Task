@@ -5,6 +5,7 @@ import com.ibrahim.arabian_task.forcast.data.source.remote.ForecastRemoteDataSou
 import com.ibrahim.arabian_task.forcast.domain.repsitory.ForecastRepository
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.data.source.local.ForecastLocalDataSource
+import com.ibrahim.arabian_task.forcast.domain.entity.EndPoint
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.presentation.model.mapToUiModel
 import io.reactivex.Flowable
@@ -18,10 +19,17 @@ class ForecastRepositoryImpl @Inject constructor(
 ) : ForecastRepository {
 
     override fun fetchForecast(params: ForecastParams): Single<List<ForecastUiModel>> {
-        return forecastRemoteDataSource.fetchForecast(params)
-                .map { cityWeatherResponse ->
-                    cityWeatherResponse.mapToUiModel()
-                }
+        if (params.endPoint == EndPoint.find){
+            return forecastRemoteDataSource.fetchForecast(params)
+                    .map { cityWeatherResponse ->
+                        cityWeatherResponse.mapToUiModel()
+                    }
+        }else{
+            return forecastRemoteDataSource.fetchForecastSnipet(params)
+                    .map { citySnipetWeatherResponse ->
+                        citySnipetWeatherResponse.mapToUiModel()
+                    }
+        }
     }
 
     override fun getForecastFromLocalDB(): Flowable<List<ForecastUiModel>> {
