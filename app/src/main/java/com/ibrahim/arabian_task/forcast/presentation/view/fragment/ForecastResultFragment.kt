@@ -13,6 +13,7 @@ import com.ibrahim.arabian_task.forcast.presentation.view.adapter.FiveDaysForeca
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_forecast_result.*
 import kotlinx.android.synthetic.main.layout_error_view.*
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -32,7 +33,8 @@ class ForecastResultFragment(
         initRecyclerView()
 
         tvTitle.text = cityName
-        viewModel.getForecast(cityName)
+//        viewModel.getForecast(cityName)
+        viewModel.screenState.value = ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception(""))
 
     }
 

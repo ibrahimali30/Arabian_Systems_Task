@@ -68,6 +68,14 @@ class FiveDaysForecastFragmentTest {
     }
 
     @Test
+    fun test_city_name_title_visibility() {
+        //test loading visibility
+        onView(withId(R.id.tvTitle)).check(matches(withText(noteDetailsFragment.cityName)))
+        viewmodel.screenState.postValue(ForecastRemoteViewModel.ForecastScreenState.Loading)
+
+    }
+
+    @Test
     fun test_binding_data_to_recycle_view_from_remote_source() {
         //test binding data to recycler view from remote source
         val forecastModelRemote = list[2]
@@ -98,10 +106,8 @@ class FiveDaysForecastFragmentTest {
             ForecastRemoteViewModel.ForecastScreenState.ErrorLoadingFromApi(Exception("test exception msg"))
         )
         onView(
-            withId(R.id.tvErrorMsg)
+            withId(R.id.errorViewLayoutFragment)
         ).check(matches(isDisplayed()))
-        onView(withId(R.id.btRetry)).check(matches(isDisplayed()))
-        // TODO: 5/30/2021 test btRetry on click
     }
 
 
