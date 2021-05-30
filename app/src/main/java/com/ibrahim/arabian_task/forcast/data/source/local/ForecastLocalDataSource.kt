@@ -1,6 +1,7 @@
 package com.ibrahim.arabian_task.forcast.data.source.local
 
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
+import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -11,15 +12,18 @@ class ForecastLocalDataSource @Inject constructor(
     private val forecastDao: ForecastDao
 ) {
 
-    fun getForecastByCityName(cityName: String): Single<ForecastUiModel> {
-        return Single.fromCallable {
-            forecastDao.getForecastByCityName(cityName)
-        }
+    fun getForecastByCityName(): Flowable<List<ForecastUiModel>> {
+        return forecastDao.getForecastByCityName()
     }
 
-    fun insertForecastUiModel(forecastUiModel: ForecastUiModel) {
+    fun insertOrDelete(forecastUiModel: ForecastUiModel) {
         Single.fromCallable {
-            forecastDao.insertForecastUiModel(forecastUiModel)
+            if (forecastUiModel.isFavourite){
+                forecastDao.deleteForecastUiModel(forecastUiModel)
+            }else{
+                forecastUiModel.isFavourite = true
+                forecastDao.insertForecastUiModel(forecastUiModel)
+            }
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()

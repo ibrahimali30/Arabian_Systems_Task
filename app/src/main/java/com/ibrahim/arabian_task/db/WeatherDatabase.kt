@@ -8,7 +8,7 @@ import com.ibrahim.arabian_task.forcast.data.source.local.ForecastDao
     entities = [
         ForecastUiModel::class
     ],
-    version = 1 , exportSchema = false
+    version = 2 , exportSchema = false
 )
 //@TypeConverters(DataConverter::class)
 abstract class WeatherDatabase : RoomDatabase() {

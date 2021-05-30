@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:animateLayoutChanges="true"
-    tools:context=".MainActivity">
+    tools:context=".forcast.presentation.view.activity.MainActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"

@@ -5,6 +5,6 @@ import java.util.*
 
 fun Long.timeStampToFormattedString(): String{
     val newDate: Date = Date(this.times(1000))
-    val format = SimpleDateFormat("EEEE, dd MMM")
+    val format = SimpleDateFormat("EEEE, dd MMM yyyy")
     return format.format(newDate)
 }

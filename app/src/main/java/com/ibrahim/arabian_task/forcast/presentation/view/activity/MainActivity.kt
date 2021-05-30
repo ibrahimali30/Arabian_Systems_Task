@@ -1,22 +1,23 @@
-package com.ibrahim.arabian_task
+package com.ibrahim.arabian_task.forcast.presentation.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
-import com.ibrahim.arabian_task.forcast.presentation.adapter.Adapter
-import com.ibrahim.arabian_task.forcast.presentation.adapter.ForecastAdapter
+import androidx.transition.Slide
+import com.ibrahim.arabian_task.R
+import com.ibrahim.arabian_task.forcast.presentation.view.adapter.ForecastAdapter
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
-import com.ibrahim.arabian_task.forcast.presentation.view.viewmodel.ForecastViewModel
+import com.ibrahim.arabian_task.forcast.presentation.view.fragment.ForecastResultFragment
+import com.ibrahim.arabian_task.forcast.presentation.viewmodel.ForecastViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_error_view.*
-import java.util.ArrayList
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,23 +38,49 @@ class MainActivity : AppCompatActivity() {
         observeScreenState()
         initSearchView()
         initRecyclerView()
-        viewModel.getForecast("Cairo")
+        viewModel.getSavedForecast()
     }
 
     private fun initRecyclerView() {
-        adapter = Adapter(::onSaveButtonClicked)
+        adapter = ForecastAdapter(::onSaveButtonClicked, ::onAForecastItemClicked)
 
         rvForecast.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         rvForecast.adapter = adapter
     }
 
+    private fun onAForecastItemClicked(forecastUiModel: ForecastUiModel) {
+        navigateToForecastFragment(forecastUiModel)
+    }
+
     private fun onSaveButtonClicked(forecastUiModel: ForecastUiModel) {
-       viewModel.insertForecastIntoLocalDB(forecastUiModel)
+        viewModel.insertOrDelete(forecastUiModel)
+    }
+
+    private fun navigateToForecastFragment(forecastUiModel: ForecastUiModel) {
+        val noteDetailsFragment = ForecastResultFragment(forecastUiModel.name)
+        noteDetailsFragment.enterTransition = Slide(Gravity.END)
+
+        supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, noteDetailsFragment)
+                .addToBackStack(noteDetailsFragment::class.java.name)
+                .commit()
     }
 
     private fun initSearchView() {
+Handler().postDelayed({ searchView.clearFocus()},3000)
+        searchView.setOnQueryTextFocusChangeListener { v, hasFocus ->
+            Log.d("TAG", "initSearchView: $hasFocus")
+        }
+        searchView.setOnCloseListener {
+            searchView.clearFocus()
+            return@setOnCloseListener false
+        }
 
-//        searchView.isActivated = true
+        searchView.findViewById<View>(R.id.search_src_text).setOnClickListener {
+            searchView.clearFocus()
+        }
+
+        searchView.isActivated = true
 //        searchView.setIconifiedByDefault(false)
 //        searchView.isIconified = false
 
@@ -80,6 +107,7 @@ class MainActivity : AppCompatActivity() {
 
         when (state) {
             is ForecastViewModel.ForecastScreenState.SuccessAPIResponse -> handleSuccess(state.data)
+            is ForecastViewModel.ForecastScreenState.SuccessLocalData -> handleSuccess(state.data)
             is ForecastViewModel.ForecastScreenState.ErrorLoadingFromApi -> handleErrorLoadingFromApi(state.error)
 //            is ForecastViewModel.ForecastScreenState.SuccessLocalDB -> handleSuccess(state.data)
 //            is ForecastViewModel.ForecastScreenState.ErrorLoadingFromLocalDB ->
@@ -112,7 +140,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "handleErrorLoadingFromApi: ")
     }
 
-    private fun handleSuccess(data: ForecastUiModel) {
+    private fun handleSuccess(data: List<ForecastUiModel>) {
 
         adapter.setList(data)
         adapter.notifyDataSetChanged()

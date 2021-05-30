@@ -7,6 +7,7 @@ import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
 import com.ibrahim.arabian_task.forcast.data.source.local.ForecastLocalDataSource
 import com.ibrahim.arabian_task.forcast.domain.entity.ForecastParams
 import com.ibrahim.arabian_task.forcast.presentation.model.mapToUiModel
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 
@@ -16,19 +17,19 @@ class ForecastRepositoryImpl @Inject constructor(
     private val forecastLocalDataSource: ForecastLocalDataSource
 ) : ForecastRepository {
 
-    override fun fetchForecast(params: ForecastParams): Single<ForecastUiModel> {
+    override fun fetchForecast(params: ForecastParams): Single<List<ForecastUiModel>> {
         return forecastRemoteDataSource.fetchForecast(params)
                 .map { cityWeatherResponse ->
                     cityWeatherResponse.mapToUiModel()
                 }
     }
 
-    override fun getForecastFromLocalDB(cityName: String): Single<ForecastUiModel> {
-        return forecastLocalDataSource.getForecastByCityName(cityName)
+    override fun getForecastFromLocalDB(): Flowable<List<ForecastUiModel>> {
+        return forecastLocalDataSource.getForecastByCityName()
     }
 
-    override fun insertForecastIntoLocalDB(forecastUiModel: ForecastUiModel) {
-        forecastLocalDataSource.insertForecastUiModel(forecastUiModel)
+    override fun insertOrDelete(forecastUiModel: ForecastUiModel) {
+        forecastLocalDataSource.insertOrDelete(forecastUiModel)
     }
 
 

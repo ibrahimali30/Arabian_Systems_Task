@@ -10,7 +10,11 @@ class ForecastRemoteDataSource @Inject constructor(
 ) {
 
      fun fetchForecast(params: ForecastParams): Single<CityWeatherResponse> {
-       return forecastApiService.getForecast()
+       return forecastApiService.getForecast(
+               params.cityName,
+               params.cnt,
+               params.units
+       )
      }
 
 }

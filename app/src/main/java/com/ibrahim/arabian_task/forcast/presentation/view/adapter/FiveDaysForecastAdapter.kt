@@ -1,30 +1,26 @@
-package com.ibrahim.arabian_task.forcast.presentation.adapter
+package com.ibrahim.arabian_task.forcast.presentation.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ibrahim.arabian_task.R
+import com.ibrahim.arabian_task.extensions.timeStampToFormattedString
 import com.ibrahim.arabian_task.forcast.presentation.model.ForecastUiModel
-import kotlinx.android.synthetic.main.item_forecast.view.*
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.item_forecast_snipet.view.*
 
-abstract class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.ArrayList()) :
-    RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
-    open val layoutResourceId = R.layout.item_forecast
+class FiveDaysForecastAdapter(
+        val data: ArrayList<ForecastUiModel> = java.util.ArrayList()
+) : RecyclerView.Adapter<FiveDaysForecastAdapter.ViewHolder>() {
 
-    abstract fun bindExtra(model: ForecastUiModel, holder: ViewHolder)
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(layoutResourceId, parent, false)
-        return ViewHolder(
-            view
-        )
+                LayoutInflater.from(parent.context).inflate(R.layout.item_forecast_snipet, parent, false)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +29,6 @@ abstract class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position])
-        bindExtra(data[position], holder)
     }
 
     fun setList(list: List<ForecastUiModel>) {
@@ -42,22 +37,11 @@ abstract class ForecastAdapter(val data: ArrayList<ForecastUiModel> = java.util.
         notifyDataSetChanged()
     }
 
-    fun clear() {
-        data.clear()
-        notifyDataSetChanged()
-    }
-
-    fun setList(list: ForecastUiModel) {
-        data.clear()
-        data.add(list)
-        notifyDataSetChanged()
-    }
-
     class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(model: ForecastUiModel) {
             itemView.apply {
-                tvCityname.text = model.name
+                tvCityname.text = model.dt.timeStampToFormattedString()
                 tvMain.text = model.main
                 tvDescription.text = model.description
                 tvTempMin.text = model.temp_min.toString()

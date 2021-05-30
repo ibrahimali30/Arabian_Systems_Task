@@ -1,4 +1,4 @@
-package com.ibrahim.arabian_task.forcast.presentation.view.viewmodel
+package com.ibrahim.arabian_task.forcast.presentation.viewmodel
 
 
 import androidx.lifecycle.MutableLiveData
@@ -13,39 +13,33 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class ForecastViewModel @Inject constructor(
+class ForecastRemoteViewModel @Inject constructor(
         private val refreshForecastUseCase: GetForecastUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     val screenState by lazy { MutableLiveData<ForecastScreenState>() }
 
-    fun getForecast(cityName: String) {
+    fun getForecast(params: ForecastParams) {
         screenState.value = ForecastScreenState.Loading
-
-        refreshForecastUseCase.fetchForecast(ForecastParams(cityName))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                handleSuccessResponse(it)
-            }, {
-                screenState.value =ForecastScreenState.ErrorLoadingFromApi(it)
-            }).addTo(compositeDisposable)
+        refreshForecastUseCase.fetchForecast(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    handleSuccessResponse(it)
+                }, {
+                    screenState.value = ForecastScreenState.ErrorLoadingFromApi(it)
+                }).addTo(compositeDisposable)
     }
 
-    fun insertForecastIntoLocalDB(forecastUiModel: ForecastUiModel) {
-        refreshForecastUseCase.insertForecastIntoLocalDB(forecastUiModel)
-    }
-
-    private fun handleSuccessResponse(it: ForecastUiModel) {
+    private fun handleSuccessResponse(it: List<ForecastUiModel>) {
         screenState.value = ForecastScreenState.SuccessAPIResponse(it)
     }
-
 
     sealed class ForecastScreenState {
         object Loading : ForecastScreenState()
         class ErrorLoadingFromApi(val error: Throwable) : ForecastScreenState()
-        class SuccessAPIResponse(val data: ForecastUiModel) : ForecastScreenState()
+        class SuccessAPIResponse(val data: List<ForecastUiModel>) : ForecastScreenState()
     }
 
 
